@@ -62,7 +62,7 @@
     export default { 
         data() { 
             return { 
-                rawText: "e", 
+                rawText: "", 
                 textArray: [], 
                 newTextArray: [], 
                 infoArray: [], 
