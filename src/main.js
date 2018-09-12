@@ -7,7 +7,7 @@ Vue.config.productionTip = false
 Vue.directive('errorCheck', {
   componentUpdated: function (el, binding, vnode) {
     let text = el.innerText;
-    if(text.match(binding.value) === null) {
+    if(text.includes("NaN")) {
       if(!el.classList.contains("has-text-danger")) {
         el.classList.add("has-text-danger");
       }
@@ -16,7 +16,7 @@ Vue.directive('errorCheck', {
   },
   inserted(el, binding, vnode) {
     let text = el.innerText;
-    if(text.match(binding.value) === null) {
+    if(text.includes("NaN")) {
       if(!el.classList.contains("has-text-danger")) {
         el.classList.add("has-text-danger");
       }

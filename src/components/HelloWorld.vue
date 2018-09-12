@@ -1,6 +1,6 @@
 <template> 
 <div class="hello">
-    <h1><code>Table crafter v 1.4</code></h1>
+    <h1><code>Table crafter v 1.5</code></h1>
     <br>
     <div class="table-container">
         <div v-for="(inform,index) in finalArr" :key="index">
@@ -96,10 +96,7 @@
                     this.newTextArray.push(i);
                   });
                 }
-                this.newTextArray.forEach((i)=>{ 
-                    this.infoArray.push((i.slice(0,i.indexOf(str)+numb)) + this.addInfo);
-                    this.priceArray.push(i.split((i.slice(0,i.indexOf(str)+numb))).pop()); 
-                }); 
+                this.fillInfoArr();
                 this.priceArray.forEach((price)=>{
                  let newPrice = parseInt(price.replace(/\s/g,''));
                   this.pricePerc.push(Math.round(newPrice * (this.perc/100)) + newPrice);
@@ -140,9 +137,8 @@
             tagMe() { 
                 let str = this.info; 
                 let numb = str.length;
-                let arr = [];
                 this.newTextArray.forEach((i)=>{ 
-                    this.infoArray.push((i.slice(0,i.indexOf(str)+numb)) + this.addInfo);
+                    this.infoArray.push((i.slice(0,i.indexOf(this.info)+numb)) + this.addInfo);
                     this.priceArray.push(i.split((i.slice(0,i.indexOf(str)+numb))).pop()); 
                 }); 
                 this.priceArray.forEach((price)=>{
@@ -154,6 +150,19 @@
                     info,
                     price: this.pricePerc[i]
                   }
+                });
+            },
+            fillInfoArr() {
+                //took all strings
+                let allStrings = this.info.split(",");
+                //for each of those create array and delete another strings
+                allStrings.forEach((smallStr)=>{
+                    this.newTextArray.forEach((bigStr)=>{
+                        if(bigStr.includes(smallStr)) {
+                            this.infoArray.push((bigStr.slice(0,bigStr.indexOf(smallStr)+smallStr.length)) + this.addInfo);
+                            this.priceArray.push(bigStr.split((bigStr.slice(0,bigStr.indexOf(smallStr)+smallStr.length))).pop());
+                        }
+                    });
                 });
             } 
         },
